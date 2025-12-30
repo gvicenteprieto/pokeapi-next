@@ -42,7 +42,8 @@ export default function LoginForm() {
         value={name}
         onChange={(e) => setName(e.target.value)}
         onKeyDown={(e) => {
-          if (e.key === "Enter") login(name); // reemplazo de onKeyPress
+          // reemplazo de onKeyPress
+          if (e.key === "Enter") login(name); 
         }}
       />
       <button className="btn-login" onClick={() => login(name)}>

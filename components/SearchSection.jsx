@@ -5,7 +5,8 @@ import { AuthContext } from "../context/AuthContext";
 
 export default function SearchSection() {
   const { favorites, addFavorite } = useContext(FavoritesContext);
-  const { user } = useContext(AuthContext); // usuario actual
+  // usuario actual
+  const { user } = useContext(AuthContext); 
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   const [results, setResults] = useState([]);
