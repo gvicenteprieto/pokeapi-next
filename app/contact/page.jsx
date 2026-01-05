@@ -26,66 +26,87 @@ export default function ContactPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-50 flex items-center justify-center p-8">
-      <div className="w-full max-w-lg bg-white shadow-lg rounded-lg p-8">
-        <h1 className="text-3xl font-bold text-blue-600 mb-6 text-center">
-          Contáctame
+    <main className="contact-main min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center px-4">
+      <div className="w-full max-w-3xl bg-white/80 backdrop-blur-md shadow-xl rounded-2xl p-10">
+        <h1 className="text-4xl font-extrabold text-indigo-600 mb-6 text-center">
+          Contactame
         </h1>
 
+        <p className="text-gray-600 mb-6 text-center">
+          Estoy disponible para consultas, proyectos o colaboraciones.
+          Completa el formulario y te responderé lo antes posible.
+        </p>
+
+        <ul className="space-y-2 text-gray-500 mb-8 text-center">
+          <li>📧 Respuesta rápida vía email</li>
+          <li>💡 Ideas y proyectos de desarrollo</li>
+          <li>🤝 Colaboraciones académicas y profesionales</li>
+        </ul>
+
         {status === "success" && (
-          <p className="mb-4 bg-green-100 text-green-700 p-3 rounded">
-            ✅ Tu mensaje fue enviado con éxito.
+          <p className="mb-4 flex items-center gap-2 bg-green-100 text-green-700 p-3 rounded-lg shadow-sm">
+            ✅ <span>Tu mensaje fue enviado con éxito.</span>
           </p>
         )}
         {status === "error" && (
-          <p className="mb-4 bg-red-100 text-red-700 p-3 rounded">
-            ❌ Hubo un error al enviar. Intenta nuevamente.
+          <p className="mb-4 flex items-center gap-2 bg-red-100 text-red-700 p-3 rounded-lg shadow-sm">
+            ❌ <span>Hubo un error al enviar. Intenta nuevamente.</span>
           </p>
         )}
 
         <form ref={formRef} onSubmit={sendEmail} className="space-y-6">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
               Nombre
             </label>
-            <input
-              type="text"
-              name="name"
-              className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              placeholder="Tu nombre"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">
-              Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              placeholder="tu@email.com"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">
-              Mensaje
-            </label>
-            <textarea
-              name="message"
-              className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              rows="5"
-              placeholder="Escribe tu mensaje..."
-              required
-            ></textarea>
+            <div className="relative">
+              <span className="absolute left-3 top-3 text-gray-400">👤</span>
+              <input
+                type="text"
+                name="name"
+                className="w-full border border-gray-300 rounded-lg pl-10 p-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                placeholder="Tu nombre"
+                required
+              />
+            </div>
           </div>
 
-          {/* Botón con spinner */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Email
+            </label>
+            <div className="relative">
+              <span className="absolute left-3 top-3 text-gray-400">✉️</span>
+              <input
+                type="email"
+                name="email"
+                className="w-full border border-gray-300 rounded-lg pl-10 p-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                placeholder="tu@email.com"
+                required
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Mensaje
+            </label>
+            <div className="relative">
+              <span className="absolute left-3 top-3 text-gray-400">📝</span>
+              <textarea
+                name="message"
+                className="w-full border border-gray-300 rounded-lg pl-10 p-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                rows="5"
+                placeholder="Escribe tu mensaje..."
+                required
+              ></textarea>
+            </div>
+          </div>
+
           <button
             type="submit"
             disabled={status === "loading"}
-            className="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg shadow hover:bg-blue-700 transition disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center"
+            className="w-full font-semibold py-3 rounded-lg shadow-lg hover:from-indigo-700 hover:to-blue-600 transition disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center"
           >
             {status === "loading" ? (
               <>
