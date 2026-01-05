@@ -1,34 +1,23 @@
-// // components/Header.jsx
-// "use client";
-// import Link from "next/link";
-// import ThemeToggle from "./ThemeToggle";
-// import LoginForm from "./LoginForm"; 
-// export default function Header() {
-//   return (
-//     <header className="header">
-//       <h2>Exámen API</h2>
-//       <div className="user-block">
-//         <LoginForm />  
-//         <ThemeToggle />
-//       </div>
-//     </header>
-//   );
-// }
-
-
-
 "use client";
 import Link from "next/link";
 import ThemeToggle from "./ThemeToggle";
 import LoginForm from "./LoginForm";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Función para aplicar estilos activos y hover
+  const linkClasses = (href) =>
+    `px-3 py-2 rounded-md font-semibold tracking-wide transition 
+     hover:text-indigo-600 hover:bg-indigo-50 hover:shadow-sm
+     ${pathname === href ? "text-indigo-700 border-b-2 border-indigo-600" : "text-gray-700"}`;
 
   return (
     <header className={`header ${open ? "nav-open" : ""}`}>
-      <h2>Exámen API</h2>
+      <h2 className="text-xl font-bold text-indigo-600">Exámen API</h2>
 
       {/* Botón hamburguesa solo en móviles */}
       <button
@@ -39,13 +28,20 @@ export default function Header() {
         ☰
       </button>
 
-      {/* Navegación + bloque de usuario en mobile */}
-      <nav>
-        <Link href="/">Inicio</Link>
-        <Link href="/contact">Contacto</Link>
-        <Link href="/about">Acerca de</Link>
+      {/* Navegación */}
+      <nav className="flex gap-6">
+        <Link href="/" className={linkClasses("/")}>
+          Inicio
+        </Link>
+        
+        <Link href="/contact" className={linkClasses("/contact")}>
+          Contacto
+        </Link>
+        <Link href="/about" className={linkClasses("/about")}>
+          Acerca de
+        </Link>
 
-        {/* Bloque de usuario se renderiza dentro del nav en mobile */}
+        {/* Bloque de usuario en mobile */}
         <div className="user-block mobile-only">
           <LoginForm />
           <ThemeToggle />

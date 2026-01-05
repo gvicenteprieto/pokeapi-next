@@ -26,118 +26,82 @@ export default function ContactPage() {
   };
 
   return (
-    <main className="contact-main min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center px-4">
-      <div className="w-full max-w-3xl bg-white/80 backdrop-blur-md shadow-xl rounded-2xl p-10">
-        <h1 className="text-4xl font-extrabold text-indigo-600 mb-6 text-center">
-          Contactame
-        </h1>
+    <main className="p-8 max-w-lg mx-auto">
+      <h1 className="text-2xl font-bold text-blue-600 mb-6 text-center">
+        Contactame
+      </h1>
 
-        <p className="text-gray-600 mb-6 text-center">
-          Estoy disponible para consultas, proyectos o colaboraciones.
-          Completa el formulario y te responderé lo antes posible.
-        </p>
+      <p className="text-gray-700 leading-relaxed mb-8 text-center">
+        Estoy disponible para consultas, proyectos o colaboraciones.
+        Completa el formulario y te responderé lo antes posible.
+      </p>
 
-        <ul className="space-y-2 text-gray-500 mb-8 text-center">
-          <li>📧 Respuesta rápida vía email</li>
-          <li>💡 Ideas y proyectos de desarrollo</li>
-          <li>🤝 Colaboraciones académicas y profesionales</li>
-        </ul>
+      <ul className="space-y-2 text-gray-600 mb-10 text-center text-sm">
+        <li>📧 Respuesta rápida vía email</li>
+        <li>💡 Ideas y proyectos de desarrollo</li>
+        <li>🤝 Colaboraciones académicas y profesionales</li>
+      </ul>
 
-        {status === "success" && (
-          <p className="mb-4 flex items-center gap-2 bg-green-100 text-green-700 p-3 rounded-lg shadow-sm">
-            ✅ <span>Tu mensaje fue enviado con éxito.</span>
-          </p>
-        )}
-        {status === "error" && (
-          <p className="mb-4 flex items-center gap-2 bg-red-100 text-red-700 p-3 rounded-lg shadow-sm">
-            ❌ <span>Hubo un error al enviar. Intenta nuevamente.</span>
-          </p>
-        )}
+      <form ref={formRef} onSubmit={sendEmail} className="space-y-10">
+        {/* Nombre */}
+        <div className="bg-blue-100 p-6 rounded-lg border border-blue-300 shadow-sm">
+          <label className="block text-sm font-medium text-gray-700 mb-3">
+            Nombre
+          </label>
+          <input
+            type="text"
+            name="name"
+            className="w-full rounded-md border border-gray-300 px-4 py-3 
+                       focus:border-blue-500 focus:ring-1 focus:ring-blue-500 
+                       placeholder-gray-400"
+            placeholder="Tu nombre"
+            required
+          />
+        </div>
 
-        <form ref={formRef} onSubmit={sendEmail} className="space-y-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Nombre
-            </label>
-            <div className="relative">
-              <span className="absolute left-3 top-3 text-gray-400">👤</span>
-              <input
-                type="text"
-                name="name"
-                className="w-full border border-gray-300 rounded-lg pl-10 p-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-                placeholder="Tu nombre"
-                required
-              />
-            </div>
-          </div>
+        {/* Email */}
+        <div className="bg-indigo-100 p-6 rounded-lg border border-indigo-300 shadow-sm">
+          <label className="block text-sm font-medium text-gray-700 mb-3">
+            Email
+          </label>
+          <input
+            type="email"
+            name="email"
+            className="w-full rounded-md border border-gray-300 px-4 py-3 
+                       focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 
+                       placeholder-gray-400"
+            placeholder="tu@email.com"
+            required
+          />
+        </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Email
-            </label>
-            <div className="relative">
-              <span className="absolute left-3 top-3 text-gray-400">✉️</span>
-              <input
-                type="email"
-                name="email"
-                className="w-full border border-gray-300 rounded-lg pl-10 p-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-                placeholder="tu@email.com"
-                required
-              />
-            </div>
-          </div>
+        {/* Mensaje */}
+        <div className="bg-purple-100 p-6 rounded-lg border border-purple-300 shadow-sm">
+          <label className="block text-sm font-medium text-gray-700 mb-3">
+            Mensaje
+          </label>
+          <textarea
+            name="message"
+            rows="6"
+            className="w-full rounded-md border border-gray-300 px-4 py-3 
+                       focus:border-purple-500 focus:ring-1 focus:ring-purple-500 
+                       placeholder-gray-400"
+            placeholder="Escribe tu mensaje..."
+            required
+          ></textarea>
+        </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Mensaje
-            </label>
-            <div className="relative">
-              <span className="absolute left-3 top-3 text-gray-400">📝</span>
-              <textarea
-                name="message"
-                className="w-full border border-gray-300 rounded-lg pl-10 p-3 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-                rows="5"
-                placeholder="Escribe tu mensaje..."
-                required
-              ></textarea>
-            </div>
-          </div>
-
-          <button
-            type="submit"
-            disabled={status === "loading"}
-            className="w-full font-semibold py-3 rounded-lg shadow-lg hover:from-indigo-700 hover:to-blue-600 transition disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center"
-          >
-            {status === "loading" ? (
-              <>
-                <svg
-                  className="animate-spin h-5 w-5 mr-2 text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  ></circle>
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                  ></path>
-                </svg>
-                Enviando...
-              </>
-            ) : (
-              "Enviar"
-            )}
-          </button>
-        </form>
-      </div>
+        {/* Botón */}
+        <button
+          type="submit"
+          disabled={status === "loading"}
+          className="w-full bg-blue-600 text-white font-semibold py-4 rounded-md 
+                     hover:bg-blue-700 transition-colors 
+                     disabled:opacity-60 disabled:cursor-not-allowed"
+        >
+          {status === "loading" ? "Enviando..." : "Enviar"}
+        </button>
+      </form>
     </main>
   );
 }
