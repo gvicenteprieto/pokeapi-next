@@ -10,7 +10,7 @@ export default function Home() {
   const { user } = useContext(AuthContext);
 
   // Caso: usuario genérico con AuthContext
-  if (user && !session) {
+  if (user) {
     return (
       <main className="p-6">
         <h1>Bienvenido {user}</h1>
@@ -21,7 +21,7 @@ export default function Home() {
   }
 
   // Caso: admin con NextAuth
-  if (session?.user.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
+  if (session?.user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
     return (
       <main className="p-6">
         <h1>Bienvenido administrador</h1>
@@ -33,7 +33,7 @@ export default function Home() {
   }
 
   // Caso: sesión NextAuth pero NO admin → tratarlos como genéricos
-  if (session && session.user.email !== process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
+  if (session && session.user?.email !== process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
     return (
       <main className="p-6">
         <h1>Bienvenido {session.user.name}</h1>
