@@ -1,9 +1,9 @@
 "use client";
 import Link from "next/link";
 import ThemeToggle from "./ThemeToggle";
-import LoginForm from "./LoginForm";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
+import UserInfo from "./UserInfo";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -33,7 +33,6 @@ export default function Header() {
         <Link href="/" className={linkClasses("/")}>
           Inicio
         </Link>
-        
         <Link href="/contact" className={linkClasses("/contact")}>
           Contacto
         </Link>
@@ -42,15 +41,15 @@ export default function Header() {
         </Link>
 
         {/* Bloque de usuario en mobile */}
-        <div className="user-block mobile-only">
-          <LoginForm />
+        <div className="user-block mobile-only flex items-center gap-2">
+          <UserInfo />   {/* reemplaza LoginForm */}
           <ThemeToggle />
         </div>
       </nav>
 
       {/* Bloque de usuario en desktop */}
-      <div className="user-block desktop-only">
-        <LoginForm />
+      <div className="user-block desktop-only flex items-center gap-2">
+        <UserInfo />   {/* reemplaza LoginForm */}
         <ThemeToggle />
       </div>
     </header>
