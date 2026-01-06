@@ -1,54 +1,24 @@
-// "use client";
-// import { useSession, signIn, signOut } from "next-auth/react";
-
-// export default function UserInfo() {
-//   const { data: session } = useSession();
-
-//   if (!session) {
-//     return (
-//       <div>
-//         <p>No estás autenticado</p>
-//         <button onClick={() => signIn("github")}>Iniciar sesión con GitHub</button>
-//       </div>
-//     );
-//   }
-
-//   return (
-//     <div>
-//       <img src={session.user.image} alt="avatar" width={40} />
-//       <p>{session.user.name}</p>
-//       <p>{session.user.email}</p>
-//       <button onClick={() => signOut()}>Cerrar sesión</button>
-//     </div>
-//   );
-// }
-
 "use client";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 
 export default function UserInfo() {
   const { data: session } = useSession();
+  const isAdmin = session?.user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL;
 
-  if (!session) {
-    return (
-      <button 
-        onClick={() => signIn("github")}
-        className="px-3 py-1 rounded bg-indigo-600 text-white hover:bg-indigo-700"
-      >
-        Iniciar sesión
-      </button>
-    );
-  }
+  if (!session || !isAdmin) return null;
 
   return (
     <div className="flex items-center gap-2">
-      <img 
-        src={session.user.image} 
-        alt="avatar" 
-        width={32} 
-        className="rounded-full border" 
-      />
-      <button 
+      {session.user?.image && (
+        <img
+          src={session.user.image}
+          alt="avatar"
+          width={32}
+          className="rounded-full border"
+        />
+      )}
+      <span>{session.user?.name}</span>
+      <button
         onClick={() => signOut()}
         className="px-3 py-1 rounded bg-red-500 text-white hover:bg-red-600"
       >

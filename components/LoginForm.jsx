@@ -10,10 +10,10 @@ export default function LoginForm() {
 
   if (user) {
     return (
-      <div className="login-user">
-        <strong className="user-name">{user}</strong>
+      <div className="login-user flex items-center gap-3">
+        <strong className="user-name text-indigo-700">Bienvenido {user}</strong>
         <button
-          className="btn-secondary"
+          className="btn-secondary px-3 py-1 rounded bg-green-500 text-white hover:bg-green-600"
           onClick={() => {
             const favSection = document.getElementById("favorites-container");
             if (favSection) favSection.scrollIntoView({ behavior: "smooth" });
@@ -22,7 +22,7 @@ export default function LoginForm() {
           ⭐ Ver favoritos
         </button>
         <button
-          className="btn-close"
+          className="btn-close px-3 py-1 rounded bg-red-500 text-white hover:bg-red-600"
           onClick={() => {
             clearFavorites();
             logout();
@@ -35,18 +35,23 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="login-form-initial">
+    <div className="login-form-initial flex gap-2 items-center">
       <input
         type="text"
         placeholder="Ingresa tu nombre"
         value={name}
         onChange={(e) => setName(e.target.value)}
         onKeyDown={(e) => {
-          // reemplazo de onKeyPress
-          if (e.key === "Enter") login(name); 
+          if (e.key === "Enter" && name.trim()) login(name.trim());
         }}
+        className="border rounded px-2 py-1"
       />
-      <button className="btn-login" onClick={() => login(name)}>
+      <button
+        className="btn-login px-3 py-1 rounded bg-indigo-600 text-white hover:bg-indigo-700"
+        onClick={() => {
+          if (name.trim()) login(name.trim());
+        }}
+      >
         🔑 Iniciar Sesión
       </button>
     </div>
