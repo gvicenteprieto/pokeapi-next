@@ -1,5 +1,16 @@
 # PokeAPI Next.js Project
 
+
+![Node.js](https://img.shields.io/badge/node-22.14.0-green)
+![Next.js](https://img.shields.io/badge/next.js-16.0.10-blue)
+![NextAuth](https://img.shields.io/badge/nextauth-4.24.13-lightgrey)
+![React](https://img.shields.io/badge/react-19.2.1-61dafb)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-4.1.18-blueviolet)
+![TypeScript](https://img.shields.io/badge/typescript-5-blue)
+![License](https://img.shields.io/badge/license-MIT-yellow)
+![Build](https://img.shields.io/badge/build-passing-brightgreen)
+
+
 Proyecto desarrollado con **Next.js**, que integra autenticación con GitHub, envío de correos mediante **EmailJS**, estilos con **TailwindCSS**, y consumo de la **PokeAPI** para mostrar información dinámica de Pokémon.
 
 
