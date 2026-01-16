@@ -3,9 +3,10 @@ import Link from "next/link";
 import ThemeToggle from "./ThemeToggle";
 import { useState, useContext } from "react";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 import UserInfo from "./UserInfo";
+import LoginButton from "./LoginButton";
 import LoginForm from "./LoginForm";
-import { useSession, signIn } from "next-auth/react";
 import { AuthContext } from "../context/AuthContext";
 
 export default function Header() {
@@ -18,28 +19,6 @@ export default function Header() {
     `px-3 py-2 rounded-md font-semibold tracking-wide transition 
      hover:text-indigo-600 hover:bg-indigo-50 hover:shadow-sm
      ${pathname === href ? "text-indigo-700 border-b-2 border-indigo-600" : "text-gray-700"}`;
-
-  const isAdmin = session?.user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL;
-
-  const renderUserBlock = () => {
-    // Caso admin con sesión
-    if (isAdmin && session) {
-      return <UserInfo />;
-    }
-    // Caso admin sin sesión
-    if (!session && process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
-      return (
-        <button
-          onClick={() => signIn("github")}
-          className="px-3 py-1 rounded bg-indigo-600 text-white hover:bg-indigo-700"
-        >
-          Iniciar sesión como admin
-        </button>
-      );
-    }
-    // Caso usuario común (AuthContext)
-    return <LoginForm />;
-  };
 
   return (
     <header className={`header ${open ? "nav-open" : ""}`}>
@@ -59,20 +38,30 @@ export default function Header() {
         <Link href="/about" className={linkClasses("/about")}>Acerca de</Link>
 
         {/* Link al Dashboard solo visible para admin logueado */}
-        {isAdmin && session && (
+        {session?.user?.role === "admin" && (
           <Link href="/dashboard" className={linkClasses("/dashboard")}>
             Dashboard
           </Link>
         )}
 
+        {/* Bloque de usuario en mobile */}
         <div className="user-block mobile-only flex items-center gap-2">
-          {renderUserBlock()}
+          {session ? (
+            <UserInfo />
+          ) : (
+            <LoginForm />
+          )}
           <ThemeToggle />
         </div>
       </nav>
 
+      {/* Bloque de usuario en desktop */}
       <div className="user-block desktop-only flex items-center gap-2">
-        {renderUserBlock()}
+        {session ? (
+          <UserInfo />
+        ) : (
+          <LoginForm />
+        )}
         <ThemeToggle />
       </div>
     </header>

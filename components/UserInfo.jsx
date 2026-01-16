@@ -3,9 +3,8 @@ import { useSession, signOut } from "next-auth/react";
 
 export default function UserInfo() {
   const { data: session } = useSession();
-  const isAdmin = session?.user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL;
 
-  if (!session || !isAdmin) return null;
+  if (!session) return null;
 
   return (
     <div className="flex items-center gap-2">
@@ -17,7 +16,7 @@ export default function UserInfo() {
           className="rounded-full border"
         />
       )}
-      <span>{session.user?.name}</span>
+      <span>{session.user?.name} ({session.user.role})</span>
       <button
         onClick={() => signOut()}
         className="px-3 py-1 rounded bg-red-500 text-white hover:bg-red-600"

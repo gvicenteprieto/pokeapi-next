@@ -6,8 +6,17 @@ import SearchSection from "../components/SearchSection";
 import FavoritesSection from "../components/FavoritesSection";
 
 export default function Home() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const { user } = useContext(AuthContext);
+
+    if (session) {
+    console.log("Email de sesión:", session.user?.email);
+  }
+
+  
+  if (status === "loading") {
+    return <p>Cargando sesión...</p>;
+  }
 
   // Caso: usuario genérico con AuthContext
   if (user) {
@@ -20,8 +29,8 @@ export default function Home() {
     );
   }
 
-  // Caso: admin con NextAuth
-  if (session?.user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
+  // Caso: sesión NextAuth con rol admin
+  if (session?.user?.role === "admin") {
     return (
       <main className="p-6">
         <h1>Bienvenido administrador</h1>
@@ -32,8 +41,8 @@ export default function Home() {
     );
   }
 
-  // Caso: sesión NextAuth pero NO admin → tratarlos como genéricos
-  if (session && session.user?.email !== process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
+  // Caso: sesión NextAuth con rol user
+  if (session?.user?.role === "user") {
     return (
       <main className="p-6">
         <h1>Bienvenido {session.user.name}</h1>
@@ -43,10 +52,11 @@ export default function Home() {
     );
   }
 
-  // Caso: sin sesión en ninguno → solo mensaje de bienvenida
+  // Caso: sin sesión en ninguno
   return (
     <main className="p-6">
       <h1>Bienvenido a mi app</h1>
+      <p>Por favor inicia sesión para ver los pokemones y favoritos.</p>
     </main>
   );
 }

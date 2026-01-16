@@ -4,18 +4,29 @@ import SearchSection from "../../components/SearchSection";
 import FavoritesSection from "../../components/FavoritesSection";
 
 export default function Dashboard() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
-  if (!session) {
+  // Mientras se carga la sesión
+  if (status === "loading") {
     return (
       <main className="p-6">
-        <h1>Acceso restringido</h1>
-        <p>Debes iniciar sesión como administrador para ver este panel.</p>
+        <h1>Cargando sesión...</h1>
       </main>
     );
   }
 
-  if (session.user.email !== process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
+  // Caso: sin sesión
+  if (!session) {
+    return (
+      <main className="p-6">
+        <h1>Acceso restringido</h1>
+        <p>Debes iniciar sesión para ver este panel.</p>
+      </main>
+    );
+  }
+
+  // Caso: sesión pero no admin
+  if (session.user.role !== "admin") {
     return (
       <main className="p-6">
         <h1>Acceso denegado</h1>
@@ -24,6 +35,7 @@ export default function Dashboard() {
     );
   }
 
+  // Caso: admin
   return (
     <main className="p-6">
       <h1>Panel de administración</h1>
